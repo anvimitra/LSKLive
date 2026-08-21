@@ -46,7 +46,7 @@ footer{background:#031027;color:#aebbd0;padding:28px 0;text-align:center}.social
 <section class="hero" id="home"><div class="container">
 <div class="badge"><i class="fa-solid fa-graduation-cap"></i> Welcome to our school</div>
 <h1>Where <span>Dreams</span> Begin & Futures Shine</h1>
-<p>LSK ACADEMY SECONDARY SCHOOL, CHECHAT is committed to inspiring young minds through quality education, discipline, confidence and innovation.</p>
+<p><span>LSK ACADEMY SECONDARY SCHOOL, CHECHAT<span> is committed to inspiring young minds through quality education, discipline, confidence and innovation.</p>
 <div class="actions"><a class="btn primary" href="#admission">Apply for Admission <i class="fa-solid fa-arrow-right"></i></a><a class="btn dark" href="#about">Explore Our School</a></div>
 </div></section>
 
@@ -132,7 +132,7 @@ footer{background:#031027;color:#aebbd0;padding:28px 0;text-align:center}.social
 
 <script>
 const REPO="anvimitra/LSKLive", BRANCH="main";
-const imageExt=/\\.(jpe?g|png|webp|gif|avif)$/i;
+const imageExt=/\.(jpe?g|png|webp|gif|avif)$/i;
 async function listImages(folder){
   try{
     const r=await fetch(`https://api.github.com/repos/${REPO}/contents/${folder}?ref=${BRANCH}`);
