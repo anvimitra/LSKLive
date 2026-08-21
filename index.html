@@ -149,19 +149,38 @@ async function loadLogo(){await loadFirst("images/logo","siteLogo")}
 async function loadGallery(){
   const items=await listImages("images/gallery");
   if(!items.length)return;
-  const box=document.getElementById("gallerySlides"), dots=document.getElementById("dots");
-  box.innerHTML=items.map((x,i)=>`<div class="slide ${i===0?"active":""}"><img src="${imageUrl(x)}" alt="${x.name}"><div class="caption"><h3>LSK ACADEMY School Gallery</h3><p>${x.name.replace(/\\.[^.]+$/,"")}</p></div></div>`).join("");
-  const slides=[...box.querySelectorAll(".slide")]; let index=0;
-  function show(i){index=(i+slides.length)%slides.length;slides.forEach((x,n)=>x.classList.toggle("active",n===index));[...dots.querySelectorAll(".dot")].forEach((x,n)=>x.classList.toggle("active",n===index))}
-  dots.innerHTML="";
-  slides.forEach((_,i)=>{const b=document.createElement("button");b.className="dot"+(i===0?" active":"");b.onclick=()=>show(i);dots.appendChild(b)});
-  window.move=n=>show(index+n);
-  if(slides.length>1)setInterval(()=>show(index+1),5000);
-}
-loadLogo(); loadFirst("images/about","aboutImage"); loadFirst("images/principal","principalImage"); loadGallery();
-window.addEventListener("scroll",()=>document.getElementById("top").style.display=scrollY>400?"block":"none");
-document.getElementById("year").textContent=new Date().getFullYear();
-document.getElementById("admissionForm").addEventListener("submit",e=>{e.preventDefault();document.getElementById("modal").classList.add("active");e.target.reset()});
+  const box=document.getElementById("gallerySlides"), dots=document.getElementById("dots");document.getElementById("admissionForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const form = e.target;
+  const fields = form.querySelectorAll("input, select, textarea");
+
+  const data = new URLSearchParams();
+
+  data.append("entry.128470307", fields[0].value); // Student Name
+  data.append("entry.1118789519", fields[1].value); // Parent / Guardian
+  data.append("entry.602513308", fields[2].value); // Phone
+  data.append("entry.1503112720", fields[3].value); // Class
+  data.append("entry.1347714382", fields[4].value); // Message
+
+  try {
+    await fetch(
+      "https://docs.google.com/forms/d/e/1FAIpQLSchLya5Ko9xjgjzaUO9u_xLJjpQOR6G62dxb8-1eAG3uo1EVQ/formResponse",
+      {
+        method: "POST",
+        mode: "no-cors",
+        body: data
+      }
+    );
+
+    document.getElementById("modal").classList.add("active");
+    form.reset();
+
+  } catch (error) {
+    console.error(error);
+    alert("Unable to submit enquiry. Please try again.");
+  }
+});
 function closeModal(){document.getElementById("modal").classList.remove("active")}
 </script>
 </body></html>
